@@ -26,7 +26,7 @@ export function shuffle<T>(array: T[]) {
  *
  * @param cards - Player received cards
  */
-export function handValues(cards: string[]) {
+export function calculateHandValues(cards: string[]) {
     let sumWithoutAces: number = 0;
     let numOfAces: number = 0;
 

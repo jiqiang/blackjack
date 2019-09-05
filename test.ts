@@ -1,6 +1,6 @@
-import { handValues } from './bj.ts';
+import { calculateHandValues } from './bj.ts';
 
-function test_handValues(): boolean {
+function test_calculateHandValues(): boolean {
     const tests = [
         { cards: ['3', '2'], expected: 5 },
         { cards: ['A', '2'], expected: 13 },
@@ -15,7 +15,7 @@ function test_handValues(): boolean {
     ];
 
     for (let test of tests) {
-        if (handValues(test.cards) !== test.expected) {
+        if (calculateHandValues(test.cards) !== test.expected) {
             console.log(test);
             return false;
         }
@@ -23,4 +23,4 @@ function test_handValues(): boolean {
     return true;
 }
 
-console.log((test_handValues() ? 'passed' : 'not passed'));
+console.log((test_calculateHandValues() ? 'passed' : 'not passed'));
