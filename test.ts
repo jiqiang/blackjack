@@ -12,6 +12,7 @@ function test_calculateHandValues(): boolean {
         { cards: ['A', 'A', '9'], expected: 21 },
         { cards: ['A', 'A', 'A', '10'], expected: 13 },
         { cards: ['A', 'A', 'A', '9'], expected: 12 },
+        { cards: ['A', 'A', 'A'], expected: 13 },
     ];
 
     for (let test of tests) {
