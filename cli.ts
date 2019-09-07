@@ -1,7 +1,7 @@
 import { BufReader } from "https://deno.land/std@v0.17.0/io/bufio.ts";
 import { TextProtoReader } from "https://deno.land/std@v0.17.0/textproto/mod.ts";
 import { encode } from "https://deno.land/std@v0.17.0/strings/mod.ts";
-import { red } from "https://deno.land/std@v0.17.0/fmt/colors.ts";
+import { red, green, blue } from "https://deno.land/std@v0.17.0/fmt/colors.ts";
 
 async function main(): Promise<void> {
   let line: string;
