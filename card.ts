@@ -23,8 +23,9 @@ export class Deck {
 
 export class Shoe {
   private Cards: Card[] = [];
+  private index: number = 0;
   
-  constructor(numOfDecks: 2|4|6|8) {
+  constructor(numOfDecks: 1|2|3|4|5|6|7|8) {
     for (let i = 0; i < numOfDecks; i++) {
       this.Cards = this.Cards.concat((new Deck()).Cards);
     }
@@ -38,6 +39,12 @@ export class Shoe {
     for (let i = 0; i < numOfShuffles; i++) {
       this.shuffle();
     }
+  }
+
+  public GetCard(): Card {
+    const card = this.Cards[this.index];
+    this.index++;
+    return card;
   }
 
   /**
@@ -61,6 +68,52 @@ export class Shoe {
   }
 }
 
+export class Game {
+  private shoe: Shoe;
+  
+  constructor() {
+    
+  }
+
+  /**
+   * Calculates hand values
+   *
+   * @param cards - Player received cards
+   */
+  public CalculateHandValues(cards: Card[]) {
+    let sumWithoutAces: number = 0;
+    let numOfAces: number = 0;
+
+    cards.forEach(card => {
+      switch (card.Rank) {
+        case "A":
+          numOfAces++;
+          break;
+        case "J":
+        case "Q":
+        case "K":
+          sumWithoutAces += 10;
+          break;
+        default:
+          sumWithoutAces += parseInt(card.Rank, 10);
+      }
+    });
+
+    if (numOfAces === 0) {
+      return sumWithoutAces;
+    }
+
+    const sumWithSmallAces = sumWithoutAces + numOfAces;
+
+    if (21 - sumWithSmallAces < 10) {
+      return sumWithSmallAces;
+    }
+
+    return sumWithSmallAces + 10;
+  }
+}
+
 const shoe = new Shoe(2);
 shoe.ShuffleCards(2);
-console.log(shoe.GetCards());
+console.log(shoe.GetCard());
+console.log(shoe.GetCard());
