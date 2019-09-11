@@ -85,8 +85,10 @@ export class Game {
   constructor() {
     this.shoe = new Shoe(1);
     this.shoe.ShuffleCards(1);
+  }
 
-    this.dealer = new Player('dealer');
+  public AddDealer(dealer: Player): void {
+    this.dealer = dealer;
   }
 
   public AddPlayer(player: Player): void {
@@ -138,7 +140,9 @@ export class Game {
 }
 
 const glenn = new Player("Glenn");
+const dealer = new Player("Dealer");
 const game = new Game();
+game.AddDealer(dealer);
 game.AddPlayer(glenn);
 
 game.Debug();
