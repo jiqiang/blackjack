@@ -92,26 +92,25 @@ export class Shoe {
 
 export class Game {
   private shoe: Shoe;
-  private dealer: Player;
-  private player: Player;
+  private players: Player[] = [];
 
   constructor() {
     this.shoe = new Shoe(1);
     this.shoe.ShuffleCards(1);
   }
 
-  public AddDealer(dealer: Player): void {
-    this.dealer = dealer;
+  public AddPlayer(player: Player): number {
+    const numOfPlayers = this.players.push(player);
+    return numOfPlayers - 1;
   }
 
-  public AddPlayer(player: Player): void {
-    this.player = player;
+  public IssueCard(playerID: string): void {
+
   }
 
   public Debug(): void {
     console.log(this.shoe.GetCards());
-    console.log(this.dealer);
-    console.log(this.player);
+    console.log(this.players);
   }
 
   /**
@@ -155,7 +154,7 @@ export class Game {
 const glenn = new Player("Glenn");
 const dealer = new Player("Dealer");
 const game = new Game();
-game.AddDealer(dealer);
-game.AddPlayer(glenn);
+const dealerId = game.AddPlayer(dealer);
+const playerId = game.AddPlayer(glenn);
 
 game.Debug();
