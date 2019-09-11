@@ -2,8 +2,21 @@ const ranks: string[] = "A,2,3,4,5,6,7,8,9,10,J,Q,K".split(",");
 const suits: string[] = "♣,♦,♥,♠".split(",");
 
 export class Player {
-  public name: string;
-  public cards: string[];
+  private name: string;
+  private cards: Card[];
+
+  public GetName(): string {
+    return this.name;
+  }
+
+  public GetCards(): Card[] {
+    return this.cards;
+  }
+
+  public ReceiveCard(card: Card) {
+    this.cards.push(card);
+  }
+
   constructor(name: string) {
     this.name = name;
     this.cards = [];
