@@ -1,3 +1,5 @@
+import Player from "./player.ts";
+
 const ranks: string[] = "A,2,3,4,5,6,7,8,9,10,J,Q,K".split(",");
 const suits: string[] = "♣,♦,♥,♠".split(",");
 
@@ -24,7 +26,7 @@ export class Deck {
 export class Shoe {
   private Cards: Card[] = [];
   private index: number = 0;
-  
+
   constructor(numOfDecks: 1|2|3|4|5|6|7|8) {
     for (let i = 0; i < numOfDecks; i++) {
       this.Cards = this.Cards.concat((new Deck()).Cards);
@@ -70,9 +72,17 @@ export class Shoe {
 
 export class Game {
   private shoe: Shoe;
-  
+  private dealer: Player;
+  private players: Player[] = [];
+
   constructor() {
-    
+    this.shoe = new Shoe(8);
+    this.dealer = new Player('dealer');
+    this.players.push(this.dealer);
+  }
+
+  public AddPlayer(player: Player) {
+    this.players.push(player);
   }
 
   /**
