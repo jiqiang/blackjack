@@ -73,18 +73,23 @@ export class Shoe {
 export class Game {
   private shoe: Shoe;
   private dealer: Player;
-  private players: Player[] = [];
+  private player: Player;
 
   constructor() {
     this.shoe = new Shoe(1);
     this.shoe.ShuffleCards(1);
 
     this.dealer = new Player('dealer');
-    this.players.push(this.dealer);
   }
 
-  public AddPlayer(player: Player) {
-    this.players.push(player);
+  public AddPlayer(player: Player): void {
+    this.player = player;
+  }
+
+  public Debug(): void {
+    console.log(this.shoe.GetCards());
+    console.log(this.dealer);
+    console.log(this.player);
   }
 
   /**
@@ -125,7 +130,8 @@ export class Game {
   }
 }
 
-const shoe = new Shoe(2);
-shoe.ShuffleCards(2);
-console.log(shoe.GetCard());
-console.log(shoe.GetCard());
+const glenn = new Player("Glenn");
+const game = new Game();
+game.AddPlayer(glenn);
+
+game.Debug();
