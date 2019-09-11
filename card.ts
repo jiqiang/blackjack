@@ -76,7 +76,9 @@ export class Game {
   private players: Player[] = [];
 
   constructor() {
-    this.shoe = new Shoe(8);
+    this.shoe = new Shoe(1);
+    this.shoe.ShuffleCards(1);
+
     this.dealer = new Player('dealer');
     this.players.push(this.dealer);
   }
