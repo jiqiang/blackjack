@@ -17,6 +17,10 @@ export class Player {
     this.cards.push(card);
   }
 
+  public ResetCards(): void {
+    this.cards = [];
+  }
+
   constructor(name: string) {
     this.name = name;
     this.cards = [];
@@ -91,26 +95,52 @@ export class Shoe {
 }
 
 export class Game {
+  private playerID: number = 0;
   private shoe: Shoe;
-  private players: Player[] = [];
+  private players: Map<number, Player>;
 
   constructor() {
     this.shoe = new Shoe(1);
     this.shoe.ShuffleCards(1);
+    this.players = new Map();
+  }
+
+  private getPlayerID(): number {
+    return this.playerID;
   }
 
   public AddPlayer(player: Player): number {
-    const numOfPlayers = this.players.push(player);
-    return numOfPlayers - 1;
+    const playerID = this.getPlayerID();
+    this.playerID++;
+    this.players.set(playerID, player);
+    return playerID;
   }
 
-  public IssueCard(playerID: string): void {
-
+  public IssueCard(playerID: number): boolean {
+    const card = this.shoe.GetCard();
+    const player = this.players.get(playerID);
+    if (!player) {
+      return false;
+    }
+    player.ReceiveCard(card);
+    return true;
   }
 
   public Debug(): void {
-    console.log(this.shoe.GetCards());
-    console.log(this.players);
+    const shoeCards: string[] = [];
+    this.shoe.GetCards().forEach(card => {
+      shoeCards.push(`${card.Suit}${card.Rank}`);
+    })
+
+    console.log(shoeCards.join(" "));
+
+    for (const [playerID, player] of this.players) {
+      const playerCards: string[] = [];
+      player.GetCards().forEach(card => {
+        playerCards.push(`${card.Suit}${card.Rank}`);
+      });
+      console.log(`${player.GetName()}(${playerID}): ${playerCards.join(" ")}`);
+    }
   }
 
   /**
@@ -154,7 +184,11 @@ export class Game {
 const glenn = new Player("Glenn");
 const dealer = new Player("Dealer");
 const game = new Game();
-const dealerId = game.AddPlayer(dealer);
-const playerId = game.AddPlayer(glenn);
+const dealerID = game.AddPlayer(dealer);
+const playerID = game.AddPlayer(glenn);
 
+game.IssueCard(dealerID);
+game.IssueCard(playerID);
+game.IssueCard(playerID);
+game.IssueCard(playerID);
 game.Debug();
