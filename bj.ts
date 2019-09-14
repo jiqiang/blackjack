@@ -126,6 +126,11 @@ export class Game {
     return true;
   }
 
+  public GetPlayerHandValues(playerID: number): number {
+    const player = this.players.get(playerID);
+    return this.CalculateHandValues(player.GetCards());
+  }
+
   public Display(): void {
     // const shoeCards: string[] = [];
     // this.shoe.GetCards().forEach(card => {
@@ -150,7 +155,7 @@ export class Game {
    *
    * @param cards - Player received cards
    */
-  public CalculateHandValues(cards: Card[]) {
+  private CalculateHandValues(cards: Card[]) {
     let sumWithoutAces: number = 0;
     let numOfAces: number = 0;
 
@@ -187,14 +192,25 @@ const game = new Game();
 const dealerID = game.AddPlayer('Dealer');
 const playerID = game.AddPlayer('Glenn');
 
+let playerStand = false;
+let dealerStand = false;
+
 while (true) {
-  game.IssueCard(dealerID);
-  game.IssueCard(playerID);
-  break;
+  if (game.GetPlayerHandValues(dealerID) >= 17) {
+    dealerStand = true;
+  } else {
+    game.IssueCard(dealerID);
+  }
+
+  if (game.GetPlayerHandValues(playerID) >= 17) {
+    playerStand = true;
+  } else {
+    game.IssueCard(playerID);
+  }
+
+  if (dealerStand && playerStand) {
+    break;
+  }
 }
 
-game.IssueCard(dealerID);
-game.IssueCard(playerID);
-game.IssueCard(dealerID);
-game.IssueCard(playerID);
 game.Display();
